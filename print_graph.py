@@ -1,17 +1,23 @@
 %matplotlib inline 
-import matplotlib.pyplot as plt
+from matplotlib.pyplot import *
 import numpy as np
 
 index = []
 j = 0
-fitness=[-6, -5, -4, -1, -1, 0]
-for i in range(0,generationCnt[-1]):
+
+for i in range(0,len(generationCnt)):
     j+=1
     index.append(j)
 
-print index
+sumGen = 0
+    
+for i in range(0,len(generationCnt)):
+    sumGen += generationCnt[i]    
+    
+print sumGen
+print len(generationCnt)
 
-y = np.array(fitness)    
+y = np.array(generationCnt)
 x = np.array(index)
 
 fig, ax = plt.subplots(figsize=(10,10))
@@ -26,17 +32,21 @@ ax.get_yaxis().tick_left()
 # rotating the axis text
 fig.autofmt_xdate()
 
-plt.autoscale(enable=True, axis=u'both', tight=False) 
-
 # labeling
 plt.title('Probability of Crossover = '+ str(probCrossover[0]) +'\n'
           + 'Probability of mutation = ' + str(probMutation[0]) + '\n' 
           + 'Size of Chromosome = ' + str(sizeOfChromo[0]) + '\n')
-plt.xlabel('# of Generation\n')
-plt.ylabel('Avg fitness\n')
+plt.xlabel('Iteration\n')
+plt.ylabel('# of Generation\n')
 
+plt.autoscale(enable=True, axis=u'both', tight=False) 
 
-line = ax.plot(x, y, 'r-o', color = 'red')
+width =1
+tab = np.arange(len(generationCnt))
+
+ax.bar(tab, y, width, color = "#0987B2")
+
+plt.legend(["Avg Generation: " + str(sumGen/len(generationCnt))],loc = "left", fancybox=True)
 
 plt.draw()
 plt.savefig("fig")
